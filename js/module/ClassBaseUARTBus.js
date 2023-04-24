@@ -76,7 +76,7 @@ class ClassBaseUARTBus {
      * Метод AddBus создает объект экземпляр класса UART, как soft реализацию UART шины.
      * Методу передается в качестве аргумента объект с параметрами создаваемой шины.
      * @param {ObjectUARTBusParam}   _opt        1 - объект с параметрами шины UART
-     * @returns {Object}            _retVal      1 - возвращаемый объект вида:
+     * @returns {Object}             _retVal      1 - возвращаемый объект вида:
         *                                          { NameBus: //имя созданной шины
         *                                            IDbus:   //объект шины UART
         *                                          }
@@ -84,11 +84,11 @@ class ClassBaseUARTBus {
     AddBus(_opt) {
         /*проверить переданные параметры шины на валидность*/
         if ((typeof (_opt.rx) === 'undefined') || (typeof (_opt.tx) === 'undefined') || (typeof (_opt.baud) === 'undefined')) {
-           throw new err('Test', 10);
+           throw new err(this.Pattern, 10);
         }
 
         if (!(_opt.sda instanceof Pin) || !(_opt.scl instanceof Pin) || !(Number.isInteger(_opt.baud))){
-           throw new err('Test', 20);
+           throw new err(this.Pattern, 20);
         }
 
         /*все необходимые для создания шины параметры переданы -> создать и инициализировать новую шину*/
@@ -98,6 +98,7 @@ class ClassBaseUARTBus {
             IDbus: new Serial(), //сгенерировать шину
             Used: true //индикатор использования шины в true
         };
+        print('Gotcha\n');
         
         this.UARTbus[bus_name].IDbus.setup(_opt.baud, {rx:_opt.rx, tx: _opt.tx}); //инициализировать шину
 
