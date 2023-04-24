@@ -19,7 +19,7 @@
  * @property {Object} tx      2 - порт tx шины UART, обязательное поле
  * @property {number} baud    3 - бод шины UART, обязательное поле
  * Пример объекта с аргументами для генерации UART объекта:
- * {sda:A0, scl:B2, bitrate:100000}
+ * {rt:A0, tx:B2, baudrate:115200}
  * 
  * Тип для хранения сгенерированных объектов-шин UART в экземпляре класса UART
  * Фактически это тип поля UARTbus
@@ -88,7 +88,6 @@ class ClassBaseUARTBus {
         }
 
         if (!(_opt.rx instanceof Pin) || !(_opt.tx instanceof Pin) || !(Number.isInteger(_opt.baud))) {
-            print('Gotcha2\n');
            throw new err(this.Pattern, 20);
         }
 
