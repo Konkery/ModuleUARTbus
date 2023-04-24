@@ -84,10 +84,12 @@ class ClassBaseUARTBus {
     AddBus(_opt) {
         /*проверить переданные параметры шины на валидность*/
         if ((typeof (_opt.rx) === 'undefined') || (typeof (_opt.tx) === 'undefined') || (typeof (_opt.baud) === 'undefined')) {
+            print('Gotcha1\n');
            throw new err(this.Pattern, 10);
         }
 
-        if (!(_opt.sda instanceof Pin) || !(_opt.scl instanceof Pin) || !(Number.isInteger(_opt.baud))){
+        if (!(_opt.sda instanceof Pin) || !(_opt.scl instanceof Pin) || !(Number.isInteger(_opt.baud))) {
+            print('Gotcha2\n');
            throw new err(this.Pattern, 20);
         }
 
