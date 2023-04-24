@@ -83,6 +83,7 @@ class ClassBaseUARTBus {
      */
     AddBus(_opt) {
         /*проверить переданные параметры шины на валидность*/
+        print('Gotcha\n');
         if ((typeof (_opt.rx) === 'undefined') || (typeof (_opt.tx) === 'undefined') || (typeof (_opt.baud) === 'undefined')) {
             print('Gotcha1\n');
            throw new err(this.Pattern, 10);
@@ -100,7 +101,7 @@ class ClassBaseUARTBus {
             IDbus: new Serial(), //сгенерировать шину
             Used: true //индикатор использования шины в true
         };
-        print('Gotcha\n');
+        
         
         this.UARTbus[bus_name].IDbus.setup(_opt.baud, {rx:_opt.rx, tx: _opt.tx}); //инициализировать шину
 
