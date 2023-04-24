@@ -62,13 +62,13 @@ class ClassBaseUARTBus {
      */
     Init() {
         let i = 1;
-        let StrUart = this.Pattern + i;
+        let StrUart = 'Serial' + i;
         while (!(eval('typeof '+StrUart+' === \'undefined\''))) {
             if (eval(StrUart+' instanceof Serial')) {
                     this.UARTbus[StrUart] = {IDbus: eval(StrUart), Used: false};
                 }
             i++;
-            StrUart = this.Pattern + i;
+            StrUart = 'Serial' + i;
         }
     }
     /**
