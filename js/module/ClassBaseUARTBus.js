@@ -50,9 +50,9 @@ class ClassBaseUARTBus {
             ClassBaseUARTBus.prototype.Instance = this;
         }
 
-        this.UARTbus = {}; //контейнер объектов-шин UART
-        this.Pattern = 'UART'; //базовая часть всех ключей объектов-шин UART, полное название получается конкатенацией с текущим индексом
-        this.IndexBus = 10; //начальный индекс soft шин
+        this._UARTbus = {}; //контейнер объектов-шин UART
+        this._Pattern = 'UART'; //базовая часть всех ключей объектов-шин UART, полное название получается конкатенацией с текущим индексом
+        this._IndexBus = 10; //начальный индекс soft шин
 
         this.Init();
     }
@@ -65,7 +65,7 @@ class ClassBaseUARTBus {
         let StrUart = 'Serial' + i;
         while (!(eval('typeof '+StrUart+' === \'undefined\''))) {
             if (eval(StrUart+' instanceof Serial')) {
-                    this.UARTbus[StrUart] = {IDbus: eval(StrUart), Used: false};
+                    this._UARTbus[StrUart] = {IDbus: eval(StrUart), Used: false};
                 }
             i++;
             StrUart = 'Serial' + i;
@@ -84,30 +84,30 @@ class ClassBaseUARTBus {
     AddBus(_opt) {
         /*проверить переданные параметры шины на валидность*/
         if ((typeof (_opt.rx) === 'undefined') || (typeof (_opt.tx) === 'undefined') || (typeof (_opt.baud) === 'undefined')) {
-           throw new err(this.Pattern, 10);
+           throw new err(this._Pattern, 10);
         }
 
         if (!(_opt.rx instanceof Pin) || !(_opt.tx instanceof Pin) || !(Number.isInteger(_opt.baud))) {
-           throw new err(this.Pattern, 20);
+           throw new err(this._Pattern, 20);
         }
 
         /*все необходимые для создания шины параметры переданы -> создать и инициализировать новую шину*/
-        let bus_name = this.Pattern + this.IndexBus; //полное имя ключа текущей шины
+        let bus_name = this._Pattern + this._IndexBus; //полное имя ключа текущей шины
         
-        this.UARTbus[bus_name] = {
+        this._UARTbus[bus_name] = {
             IDbus: new Serial(), //сгенерировать шину
             Used: true //индикатор использования шины в true
         };
         
         
-        this.UARTbus[bus_name].IDbus.setup(_opt.baud, {rx:_opt.rx, tx: _opt.tx}); //инициализировать шину
+        this._UARTbus[bus_name].IDbus.setup(_opt.baud, {rx:_opt.rx, tx: _opt.tx}); //инициализировать шину
 
-        ++this.IndexBus; //увеличить индекс шины
+        ++this._IndexBus; //увеличить индекс шины
         
         return {
                 NameBus: bus_name, //имя созданной шины
                 
-                IDbus:   this.UARTbus[bus_name].IDbus //объект шина UART
+                IDbus:   this._UARTbus[bus_name].IDbus //объект шина UART
             };
     }
 }
